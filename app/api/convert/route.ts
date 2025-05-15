@@ -62,8 +62,12 @@ export async function POST(request: Request) {
     headers.set('Content-Type', 'application/zip');
     headers.set('Content-Disposition', 'attachment; filename="converted_fonts.zip"');
     return new NextResponse(zipBuffer, { headers });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('批量转换错误:', error);
-    return NextResponse.json({ error: error.message || '字体批量转换失败' }, { status: 500 });
+    let message = '字体批量转换失败';
+    if (error instanceof Error) {
+      message = error.message;
+    }
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 } 
