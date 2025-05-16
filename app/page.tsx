@@ -35,8 +35,9 @@ export default function Home() {
     setError(null);
     try {
       const formData = new FormData();
-      files.forEach((file: File) => formData.append('files', file));
-      formData.append('format', targetFormat);
+      // 只上传第一个文件，字段名为 file
+      formData.append('file', files[0]);
+      formData.append('target_format', targetFormat);
       const response = await fetch('https://font-converter-api.onrender.com/convert', {
         method: 'POST',
         body: formData,
