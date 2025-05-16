@@ -31,13 +31,16 @@ async def convert_font(
 
     # 调用 convert_font.py 进行转换
     try:
-        subprocess.run(
+        result = subprocess.run(
             ["python3", "convert_font.py", input_filename, output_filename],
-            check=True
+            check=True,
+            capture_output=True,
+            text=True
         )
-    except subprocess.CalledProcessError:
+    except subprocess.CalledProcessError as e:
         os.remove(input_filename)
-        return JSONResponse(status_code=500, content={"error": "Font conversion failed"})
+        print("字体转换失败，错误信息：", e.stderr)
+        return JSONResponse(status_code=500, content={"error": "Font conversion failed", "detail": e.stderr})
 
     # 返回转换后的文件
     response = FileResponse(output_filename, filename=output_filename)
