@@ -4,3 +4,4 @@ fonttools
 brotli
 zopfli
 python-multipart
+ttf2woff2

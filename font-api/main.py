@@ -24,8 +24,9 @@ async def convert_font(
     target_format: str = Form(...)
 ):
     # 保存上传的文件
-    input_filename = f"input_{uuid.uuid4().hex}_{file.filename}"
-    output_filename = f"output_{uuid.uuid4().hex}.{target_format}"
+    temp_dir = "/tmp"
+    input_filename = os.path.join(temp_dir, f"input_{uuid.uuid4().hex}_{file.filename}")
+    output_filename = os.path.join(temp_dir, f"output_{uuid.uuid4().hex}.{target_format}")
     with open(input_filename, "wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
 
