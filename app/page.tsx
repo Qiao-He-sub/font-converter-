@@ -1,9 +1,14 @@
 'use client';
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { ArrowUpTrayIcon, ArrowDownTrayIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
 
-const formatOptions = [
+interface FormatOption {
+  value: string;
+  label: string;
+}
+
+const formatOptions: FormatOption[] = [
   { value: 'woff2', label: 'WOFF2' },
   { value: 'woff', label: 'WOFF' },
   { value: 'ttf', label: 'TTF' },
@@ -30,9 +35,9 @@ export default function Home() {
     setError(null);
     try {
       const formData = new FormData();
-      files.forEach((file) => formData.append('files', file));
+      files.forEach((file: File) => formData.append('files', file));
       formData.append('format', targetFormat);
-      const response = await fetch('/api/convert', {
+      const response = await fetch('https://font-converter-api.onrender.com/convert', {
         method: 'POST',
         body: formData,
       });
