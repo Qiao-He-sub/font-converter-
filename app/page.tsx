@@ -40,6 +40,10 @@ export default function Home() {
       const response = await fetch('https://font-converter-api.onrender.com/convert', {
         method: 'POST',
         body: formData,
+        mode: 'cors',
+        headers: {
+          'Accept': 'application/json',
+        },
       });
       if (!response.ok) {
         let errorMsg = '转换失败';

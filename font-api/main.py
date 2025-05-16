@@ -12,9 +12,10 @@ app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],  # 在生产环境中，建议设置为具体的域名
-    allow_credentials=True,
-    allow_methods=["*"],
+    allow_credentials=False,  # 修改为 False，因为使用了通配符
+    allow_methods=["GET", "POST", "OPTIONS"],
     allow_headers=["*"],
+    expose_headers=["Content-Disposition"]
 )
 
 @app.post("/convert")
